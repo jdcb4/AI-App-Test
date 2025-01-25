@@ -197,10 +197,34 @@ function showFullRecipe(index) {
   `;
 }
 
+function addSwipeClasses(direction) {
+  foodCard.classList.add("swiping");
+  foodCard.classList.add(`swipe-${direction}`);
+}
+
+function removeSwipeClasses() {
+  foodCard.classList.remove("swiping");
+  foodCard.classList.remove("swipe-left");
+  foodCard.classList.remove("swipe-right");
+}
+
 // Set up Hammer.js for swipe gestures
 const hammer = new Hammer(foodCard);
-hammer.on("swipeleft", handleDislike);
-hammer.on("swiperight", handleLike);
+hammer.on("swipeleft", () => {
+  addSwipeClasses("left");
+  setTimeout(() => {
+    handleDislike();
+    removeSwipeClasses();
+  }, 500); // Adjust the timeout duration based on your desired animation duration
+});
+
+hammer.on("swiperight", () => {
+  addSwipeClasses("right");
+  setTimeout(() => {
+    handleLike();
+    removeSwipeClasses();
+  }, 500); // Adjust the timeout duration based on your desired animation duration
+});
 
 // Set up button click events
 likeButton.addEventListener("click", handleLike);
@@ -208,3 +232,20 @@ dislikeButton.addEventListener("click", handleDislike);
 
 // Show the first category
 showNext();
+
+// Add CSS styles for swipe animations
+const style = document.createElement("style");
+style.innerHTML = `
+  .swiping {
+    transition: transform 0.5s ease-in-out; /* Adjust the duration as needed */
+  }
+
+  .swipe-left {
+    transform: translateX(-100%);
+  }
+
+  .swipe-right {
+    transform: translateX(100%);
+  }
+`;
+document.head.appendChild(style);
