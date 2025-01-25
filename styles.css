@@ -76,3 +76,15 @@ button {
 #dislike-button {
   display: none;
 }
+
+.swiping {
+  transition: transform 0.5s ease-in-out; /* Adjust the duration as needed */
+}
+
+.swipe-left {
+  transform: translateX(-100%);
+}
+
+.swipe-right {
+  transform: translateX(100%);
+}
