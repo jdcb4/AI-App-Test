@@ -116,14 +116,38 @@ const foods = {
   ],
 };
 
-// ... (rest of the code remains unchanged)
+// Create a new HTML element for the title card
+const titleCard = document.createElement("div");
+titleCard.id = "title-card";
+titleCard.innerHTML = `
+  <h2>Pick Your Categories</h2>
+`;
+
+// Append the title card to the app container
+app.appendChild(titleCard);
 
 function showNext() {
   if (currentStep === "categories") {
+    titleCard.style.display = "none";
     showNextCategory();
+  } else if (currentStep === "foods_title") {
+    showFoodsTitle();
   } else if (currentStep === "foods") {
     showNextFood();
   }
+}
+
+function showFoodsTitle() {
+  foodCard.style.display = "none";
+  resultContainer.style.display = "block";
+  resultContainer.innerHTML = `
+    <h2>Now Pick Your Favorite Foods</h2>
+  `;
+  setTimeout(() => {
+    currentStep = "foods";
+    currentIndex = 0;
+    showNextFood();
+  }, 2000); // Adjust the timeout duration based on your desired delay
 }
 
 function showNextCategory() {
